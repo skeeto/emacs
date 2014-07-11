@@ -323,6 +323,7 @@ OPTION_DEFAULT_ON([gsettings],[don't compile with GSettings support])
 OPTION_DEFAULT_ON([selinux],[don't compile with SELinux support])
 OPTION_DEFAULT_ON([gnutls],[don't use -lgnutls for SSL/TLS support])
 OPTION_DEFAULT_ON([zlib],[don't compile with zlib decompression support])
+OPTION_DEFAULT_ON([sqlite3],[don't use -lsqlite3 for SQLite support])
 
 AC_ARG_WITH([file-notification],[AS_HELP_STRING([--with-file-notification=LIB],
  [use a file notification library (LIB one of: yes, gfile, inotify, w32, no)])],
@@ -3142,6 +3143,19 @@ if test "${HAVE_ZLIB}" = "yes"; then
 fi
 AC_SUBST(LIBZ)
 
+HAVE_SQLITE3=no
+if test "${with_sqlite3}" = "yes" ; then
+  PKG_CHECK_MODULES([LIBSQLITE3], [sqlite3 >= 3.0.0], HAVE_SQLITE3=yes, HAVE_SQLITE3=no)
+  if test "${HAVE_SQLITE3}" = "yes"; then
+    AC_DEFINE(HAVE_SQLITE3, 1, [Define if using SQLite.])
+  fi
+  CFLAGS="$CFLAGS $LIBSQLITE3_CFLAGS"
+  LIBS="$LIBSQLITE3_LIBS $LIBS"
+fi
+AC_SUBST(LIBSQLITE3_LIBS)
+AC_SUBST(LIBSQLITE3_CFLAGS)
+
+
 ### Use -lpng if available, unless `--with-png=no'.
 HAVE_PNG=no
 LIBPNG=
@@ -5044,6 +5058,7 @@ echo "  Does Emacs use -lm17n-flt?                              ${HAVE_M17N_FLT}
 echo "  Does Emacs use -lotf?                                   ${HAVE_LIBOTF}"
 echo "  Does Emacs use -lxft?                                   ${HAVE_XFT}"
 echo "  Does Emacs directly use zlib?                           ${HAVE_ZLIB}"
+echo "  Does Emacs use -lsqlite3?                               ${HAVE_SQLITE3}"
 
 echo "  Does Emacs use toolkit scroll bars?                     ${USE_TOOLKIT_SCROLL_BARS}"
 echo

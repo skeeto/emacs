@@ -181,6 +181,7 @@ search.o: search.c regex.h commands.h buffer.h region-cache.h syntax.h \
    $(INTERVALS_H) lisp.h globals.h $(config_h)
 sound.o: sound.c dispextern.h syssignal.h lisp.h globals.h $(config_h) \
    atimer.h systime.h ../lib/unistd.h msdos.h
+sqlite.o: sqlite.c sqlite.h lisp.h $(config_h)
 syntax.o: syntax.c syntax.h buffer.h commands.h category.h character.h \
    keymap.h regex.h $(INTERVALS_H) lisp.h globals.h $(config_h)
 sysdep.o: sysdep.c syssignal.h systty.h systime.h syswait.h blockinput.h \

@@ -83,9 +83,12 @@ along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.  */
 #include "sysselect.h"
 #include "systime.h"
 
+#include "sqlite.h"
+
 #ifdef HAVE_GNUTLS
 #include "gnutls.h"
 #endif
+
 
 #if (defined PROFILING \
      && (defined __FreeBSD__ || defined GNU_LINUX || defined __MINGW32__))
@@ -1515,6 +1518,8 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 #ifdef HAVE_GNUTLS
       syms_of_gnutls ();
 #endif
+
+      syms_of_sqlite3 ();
 
 #ifdef HAVE_GFILENOTIFY
       syms_of_gfilenotify ();
